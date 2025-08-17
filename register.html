@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center text-center">
+            <div class="flex gap-4">
+                <img class="w-10 mr-3" src="./src/graduation-cap.png" alt="Graduation Cap">
+                <h1 class="font-bold text-2xl text-white">Student Networking Hub</h1>
+            </div>
+            <a href="login.html" class="text-white text-2xl font-semibold ">Login</a>
+        </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="flex-grow flex items-center justify-center py-12 gap-20">
+        <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Create Your Account</h2>
+            <form action="register.php" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div>
+                                    <!-- User Information -->
+                    <div>
+                        <label for="username" class="block text-gray-700 font-medium">Username</label>
+                        <input type="text" id="username" name="username" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your username" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium">Email</label>
+                        <input type="email" id="email" name="email" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your email" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="age" class="block text-gray-700 font-medium">Age</label>
+                            <input type="number" id="age" name="age" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your age" required>
+                        </div>
+                        <div>
+                            <label for="location" class="block text-gray-700 font-medium">Location</label>
+                            <input type="text" id="location" name="location" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your location" required>
+                        </div>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700 font-medium">Phone</label>
+                    <input type="text" id="phone" name="phone" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your phone number" required>
+                </div>
+                </div>
+                <div>
+                    <!-- Education -->
+                    <div>
+                        <label for="university" class="block text-gray-700 font-medium">University</label>
+                        <input type="text" id="university" name="university" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your university name">
+                    </div>
+                    <div>
+                        <label for="education_duration" class="block text-gray-700 font-medium">Education Duration</label>
+                        <input type="text" id="education_duration" name="education_duration" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Duration of education">
+                    </div>
+                    <!-- Skills -->
+                    <div>
+                        <label for="skills" class="block text-gray-700 font-medium">Skills</label>
+                        <textarea id="skills" name="skills" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="List your skills"></textarea>
+                    </div>
+    
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-gray-700 font-medium">Password</label>
+                        <input type="password" id="password" name="password" class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter your password" required>
+                    </div>                    
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-300">Register</button>
+            </form>
+            <p class="mt-6 text-center text-gray-600">Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a></p>
+        </div>
+        <div class="mt-6">
+            <img class="w-[600px] rounded-3xl" src="./src/dxf91zhqd2z6b0bwg85ktm5s4-DNBxXF.png" alt="">
+        </div>
+    </section>
+</body>
+</html>
