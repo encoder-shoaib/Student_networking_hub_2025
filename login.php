@@ -1,4 +1,5 @@
 <?php
+// login.php
 session_start();
 include('db.php');
 
@@ -13,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['email'] = $user['email'];
         header("Location: index.php");
     } else {
-        // If insertion fails, show an alert
         echo "<script>alert('Login failed. Please try again.'); window.location.href='login.html';</script>";
     }
 }

@@ -6,6 +6,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-echo "Welcome, " . $_SESSION['username'] . "!<br>";
+echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!<br>";
 ?>
 <a href="logout.php">Logout</a>
