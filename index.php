@@ -38,19 +38,60 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["post_image"])) {
     $username = $_POST['username'];
     $content = $_POST['content'];
 
-    // Handle image upload
-    $image_name = $_FILES["post_image"]["name"];
-    $image_tmp_name = $_FILES["post_image"]["tmp_name"];
-    $image_folder = "uploads/" . basename($image_name);
+    // Validate file upload
+    if ($_FILES["post_image"]["error"] !== UPLOAD_ERR_OK) {
+        die("File upload error: " . $_FILES["post_image"]["error"]);
+    }
 
-    if (move_uploaded_file($image_tmp_name, $image_folder)) {
-        $stmt = $conn->prepare("INSERT INTO posts (user_id, username, profile_picture, content, image, email) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssss", $user_id, $username, $gravatar_url, $content, $image_folder, $email);
-        $stmt->execute();
+    // Check file type and size
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+    $file_info = finfo_open(FILEINFO_MIME_TYPE);
+    $mime_type = finfo_file($file_info, $_FILES["post_image"]["tmp_name"]);
+    finfo_close($file_info);
+
+    if (!in_array($mime_type, $allowed_types)) {
+        die("Only JPEG, PNG, and GIF images are allowed.");
+    }
+
+    if ($_FILES["post_image"]["size"] > 5 * 1024 * 1024) { // 5MB limit
+        die("File is too large. Maximum size is 5MB.");
+    }
+
+    // Create uploads directory if it doesn't exist
+    if (!file_exists('uploads')) {
+        mkdir('uploads', 0777, true);
+    }
+
+    // Generate unique filename
+    $image_ext = pathinfo($_FILES["post_image"]["name"], PATHINFO_EXTENSION);
+    $image_name = uniqid() . '.' . $image_ext;
+    $image_folder = "uploads/" . $image_name;
+
+    if (move_uploaded_file($_FILES["post_image"]["tmp_name"], $image_folder)) {
+        $stmt = $conn->prepare("INSERT INTO posts (user_id, username, profile_picture, content, image) VALUES (?, ?, ?, ?, ?)");
+
+        if ($stmt === false) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $bind_result = $stmt->bind_param("issss", $user_id, $username, $gravatar_url, $content, $image_folder);
+
+        if ($bind_result === false) {
+            die("Bind failed: " . $stmt->error);
+        }
+
+        $execute_result = $stmt->execute();
+
+        if ($execute_result === false) {
+            die("Execute failed: " . $stmt->error);
+        }
+
         $stmt->close();
 
         header("Location: index.php");
         exit();
+    } else {
+        die("Failed to move uploaded file.");
     }
 }
 
@@ -78,9 +119,9 @@ $result = $conn->query($sql);
             </div>
             <div class="hidden md:flex">
                 <a href="./index.php" class="text-gray-300 hover:text-white px-4">Home</a>
-                <a href="#" class="text-gray-300 hover:text-white px-4">About</a>
-                <a href="#" class="text-gray-300 hover:text-white px-4">Services</a>
-                <a href="#" class="text-gray-300 hover:text-white px-4">Contact</a>
+                <a href="./about.php" class="text-gray-300 hover:text-white px-4">About</a>
+                <a href="./services.php" class="text-gray-300 hover:text-white px-4">Services</a>
+                <a href="./contact.php" class="text-gray-300 hover:text-white px-4">Contact</a>
             </div>
             <!-- Search Container -->
             <div class="search-container">
